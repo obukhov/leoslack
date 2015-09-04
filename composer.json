@@ -13,13 +13,17 @@
   "require": {
     "php": ">=5.4.0",
     "maknz/slack": "1.*",
-    "symfony/http-foundation": "*"
+    "frlnc/php-slack": "1.*",
+    "symfony/http-foundation": "*",
+    "imagine/imagine": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "4.2.*"
   },
-  "psr-4": {
-    "Leoslack\\": "src"
+  "autoload": {
+    "psr-0": {
+      "LeoSlack\\": "src"
+    }
   },
   "minimum-stability": "stable"
 }

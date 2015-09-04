@@ -25,7 +25,7 @@ class Config
 
     public function getKey($keyName)
     {
-        if (isset($this->config[$keyName])) {
+        if (!isset($this->config[$keyName])) {
             throw new ConfigException(sprintf('Key %s not found', $keyName));
         }
 
