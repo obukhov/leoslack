@@ -7,6 +7,7 @@ use LeoSlack\Model\SlashCommand;
 use LeoSlack\Service\Config;
 use LeoSlack\Service\ImageProcessor;
 use LeoSlack\Service\SlackApi;
+use LeoSlack\Service\UsageStats;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,17 +19,25 @@ class Application
     protected $imageProcessor;
     /** @var Config */
     protected $appConfig;
+    /** @var UsageStats */
+    protected $usageStats;
 
     /**
      * Application constructor.
      * @param SlackApi $slackApi
      * @param ImageProcessor $imageProcessor
+     * @param UsageStats $usageStats
      * @param Config $appConfig
      */
-    public function __construct(SlackApi $slackApi, ImageProcessor $imageProcessor, Config $appConfig)
-    {
+    public function __construct(
+        SlackApi $slackApi,
+        ImageProcessor $imageProcessor,
+        UsageStats $usageStats,
+        Config $appConfig
+    ) {
         $this->slackApi = $slackApi;
         $this->imageProcessor = $imageProcessor;
+        $this->usageStats = $usageStats;
         $this->appConfig = $appConfig;
     }
 
@@ -43,6 +52,7 @@ class Application
         return new Application(
             new SlackApi($config->getNamespace('slack')),
             new ImageProcessor($config->getNamespace('image')),
+            new UsageStats($config->getNamespace('stats')),
             $config->getNamespace('app')
         );
     }
@@ -102,5 +112,6 @@ class Application
 
         $imageUrl = $this->imageProcessor->getUrlForImageCode($code, $size);
         $this->slackApi->sendAttachedImage($command, $imageUrl);
+        $this->usageStats->saveUsageEvent($code, new \DateTime());
     }
 }

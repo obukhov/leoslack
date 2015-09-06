@@ -9,6 +9,9 @@ return [
         'token' => '<your-slack-token>',
         'endpoint' => '<endpoint>',
     ],
+    'stats' => [
+        'basePath' => realpath('./data/statistics/'),
+    ],
     'image' => [
         'basePath' => realpath('./images/'),
         'baseUrl' => '<base-url>',
