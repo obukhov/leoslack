@@ -1,0 +1,115 @@
+Leo Slack
+=========
+
+Leo Slack is framework and solution for integrated with slack service of posting big smilies (also known as stickers) to channels, groups and private chats of your team's slack.
+
+You can read this read in Russian at [dclg.net](http://dclg.net/2015/10/18/leo-slack/).
+
+How does it look like
+---------------------------
+
+The user case is pretty simple. You can type [slash-command](https://api.slack.com/slash-commands) with pre-configured keyword (default is ```/leo```) and code of sticker and bot will post an image attachment to the channel.
+
+![](http://dclg.net/wp-content/uploads/2015/10/leoslackHowitlookslike.png) 
+
+Copyright
+-------------
+
+This codebase is free for non-commercial usage. Images in /images/source are property of "Lingualeo LLC" and can be used only in specified way as stickers for slack chat. Any other usage of this images must be approved by Lingual LLC in written form.
+
+Installation
+--------------
+
+Leo slack application requires web server powered by php (version >= 5.4). Installation goes in two simple steps:
+
+1. Clone the repository:
+
+```
+git clone git@github.com:obukhov/leoslack.git
+```
+2. Install dependencies with composer:
+
+```
+composer install
+```
+
+If you haven't composer installed, you can refer to it's [official website](https://getcomposer.org/).
+
+Configuration and setting up
+----------------------------
+
+To make things work you must configure following integrations in your slack account.
+
+First of all you should copy dist configuration file:
+
+```
+cp config.dist.php config.php
+```
+
+In this file you can redefine any of settings declared in ```baseConfig.php``` file.
+
+### Configuring slash command
+
+Go to your slack account management panel and add new slash command:
+
+![](http://dclg.net/wp-content/uploads/2015/10/screenshot3.png)
+
+*Command* is a keyword to trigger service integration. This setting must be the same as  ```$config['app']['stickerCommand']``` config value.
+
+*URL* is location of your app installation.
+
+*Token* is an integration token. You must copy token value to  ```$config['slack']['token']``` in your ```config.php``` file.
+
+You should configure **Autocomplete help text** to make this function more intuitive.
+
+### Configuring incoming web hook
+
+To make posting to slack available you must configure [incoming  web hook](https://api.slack.com/incoming-webhooks):
+
+![](http://dclg.net/wp-content/uploads/2015/10/leoslackIncomingWebHook.png)
+
+You can choose any *channel for posting to*, this will be overridden while posting to current channel.
+ 
+You must copy *web hook URL* to ```$config['slack']['endpoint']``` to make this integration work.
+
+### Add API token
+
+Last integration is web api. It is required for fetching user's name and avatar. You must copy web api token from here: [https://api.slack.com/web](https://api.slack.com/web) to  ```$config['slack']['webApiToken']```  in your ```config.php``` file.
+
+### Configuration overview
+
+There are some useful configuration values declared in ```baseConfig.php```. You can override them by redeclaring same keys in ```config.php``` file.
+
+#### Image processing settings
+
+```
+...
+'image' => [
+        'basePath' => realpath('./images/'),
+        'baseUrl' => '', // base url for images, you should redefine it in config.php
+        'size' => 250,
+        'map' => []
+]        
+...
+```
+
+- **basePath** - you can redefine it if you want to store images in different directory.
+- **baseUrl** - is prefix for stickers url when posting it to chat. You must specify domain name and path to leoslack installation.
+- **size** - image height. All stickers will be resized to this height.
+- **map** - associative array of sticker code and file name.
+
+#### Application settings
+
+```
+...
+'app' => [
+	'helpUrl' => '', // url to index.php file of this project, you should redefine it in config.php
+	'stickerCommand' => '/leo',
+]
+...
+```
+
+- ***stickerCommand*** - you can use your own. The only thing you should care is this config value corresponds you slash command configuration.
+- ***helpUrl*** - this url is the same as slash command URL, it will show all stickers directory if requested by GET method. It will be shown in error message for user if he tries to use not existing sticker code:
+
+![](http://dclg.net/wp-content/uploads/2015/10/leoslackHelp.png)

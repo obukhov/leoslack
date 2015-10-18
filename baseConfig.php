@@ -2,16 +2,17 @@
 
 return [
     'app' => [
-        'helpUrl' => '<url to index.php file of this project>',
+        'helpUrl' => '', // url to index.php file of this project, you should redefine it in config.php
         'stickerCommand' => '/leo',
     ],
     'slack' => [
-        'token' => '<your-slack-token>',
-        'endpoint' => '<endpoint>',
+        'token' => '', // slash command token, you should redefine it in config.php
+        'endpoint' => '', // incoming hook endpoint, you should redefine it in config.php
+        'webApiToken' => '', // slack web api token, you should redefine it in config.php
     ],
     'image' => [
         'basePath' => realpath('./images/'),
-        'baseUrl' => '<base-url>',
+        'baseUrl' => '', // base url for images, you should redefine it in config.php
         'size' => 250,
         'map' => [
             'surprise' => '1.png',
