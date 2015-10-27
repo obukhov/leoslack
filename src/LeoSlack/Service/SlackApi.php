@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SlackApi
 {
     /** @var  Client */
-    protected $hookClient;
+    protected $incomingWebHookClient;
     /** @var  Config */
     protected $config;
 
@@ -25,8 +25,8 @@ class SlackApi
      */
     public function __construct(Config $config)
     {
-        $this->hookClient = new Client($config->getKey('endpoint'));
-        $this->token = $config->getKey('token');
+        $this->incomingWebHookClient = new Client($config->getKey('incomingWebHookURL'));
+        $this->slashCommandToken = $config->getKey('slashCommandToken');
 
         $webApiInteractor = (new CurlInteractor());
         $webApiInteractor->setResponseFactory(new SlackResponseFactory());
@@ -41,7 +41,7 @@ class SlackApi
      */
     public function parseSlashCommand(Request $request)
     {
-        if ($request->getMethod() !== Request::METHOD_POST || $request->get('token') !== $this->token) {
+        if ($request->getMethod() !== Request::METHOD_POST || $request->get('token') !== $this->slashCommandToken) {
             throw new InvalidTokenRequestException('Wrong request token');
         }
 
@@ -71,13 +71,13 @@ class SlackApi
             $userProfile = $result->getBody()['user']['profile'];
         }
 
-        $message = $this->hookClient->createMessage()
+        $message = $this->incomingWebHookClient->createMessage()
             ->from($userProfile['real_name'])
             ->to($command->getChannelId())
             ->setIcon($userProfile['image_72'])
             ->setText('/leo ' . $command->getText())
             ->attach(['image_url' => $imageUrl]);
 
-        $this->hookClient->sendMessage($message);
+        $this->incomingWebHookClient->sendMessage($message);
     }
 }

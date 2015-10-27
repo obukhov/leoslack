@@ -1,34 +1,32 @@
 Leo Slack
 =========
 
-Leo Slack is framework and solution for integrated with slack service of posting big smilies (also known as stickers) to channels, groups and private chats of your team's slack.
+Leo Slack is framework and solution for service of posting big smilies (also known as stickers) to channels, groups and private chats of your team's slack.
 
-You can read this read in Russian at [dclg.net](http://dclg.net/2015/10/18/leo-slack/).
+You can read about this project in Russian at [dclg.net](http://dclg.net/2015/10/18/leo-slack/).
 
 How does it look like
 ---------------------------
 
-The user case is pretty simple. You can type [slash-command](https://api.slack.com/slash-commands) with pre-configured keyword (default is ```/leo```) and code of sticker and bot will post an image attachment to the channel.
+The user case is pretty simple. You can type [slash-command](https://api.slack.com/slash-commands) with pre-configured keyword (default is ```/leo```) and code of sticker in slack chat. The service will post an image attachment to the chat.
 
 ![](http://dclg.net/wp-content/uploads/2015/10/leoslackHowitlookslike.png) 
 
 Copyright
 -------------
 
-This codebase is free for non-commercial usage. Images in /images/source are property of "Lingualeo LLC" and can be used only in specified way as stickers for slack chat. Any other usage of this images must be approved by Lingual LLC in written form.
+This codebase is free for non-commercial usage. Images in /images/source folder are property of "Lingualeo LLC" and can be used only in specified way as stickers for slack chat. Any other way of usage of this images must be approved by Lingual LLC in written form.
 
 Installation
 --------------
 
-Leo slack application requires web server powered by php (version >= 5.4). Installation goes in two simple steps:
+Leo slack application requires web server powered by php (version >= 5.4). Installation consist of two simple steps:
 
 1. Clone the repository:
-
 ```
 git clone git@github.com:obukhov/leoslack.git
 ```
 2. Install dependencies with composer:
-
 ```
 composer install
 ```
@@ -40,7 +38,9 @@ Configuration and setting up
 
 To make things work you must configure following integrations in your slack account.
 
-First of all you should copy dist configuration file:
+### Create configuration file
+
+First of all you should copy distributed configuration file to your custom location:
 
 ```
 cp config.dist.php config.php
@@ -58,27 +58,27 @@ Go to your slack account management panel and add new slash command:
 
 *URL* is location of your app installation.
 
-*Token* is an integration token. You must copy token value to  ```$config['slack']['token']``` in your ```config.php``` file.
+*Token* is an integration token. You must copy token value to  ```$config['slack']['slashCommandToken']``` in your ```config.php``` file.
 
-You should configure **Autocomplete help text** to make this function more intuitive.
+You should also configure **Autocomplete help text** to make this function more intuitive.
 
 ### Configuring incoming web hook
 
-To make posting to slack available you must configure [incoming  web hook](https://api.slack.com/incoming-webhooks):
+To make posting to slack chat available you must configure [incoming  web hook](https://api.slack.com/incoming-webhooks):
 
 ![](http://dclg.net/wp-content/uploads/2015/10/leoslackIncomingWebHook.png)
 
-You can choose any *channel for posting to*, this will be overridden while posting to current channel.
+You can choose any *channel for posting to*, the channel will be overridden to the current one while posting.
  
-You must copy *web hook URL* to ```$config['slack']['endpoint']``` to make this integration work.
+You must copy *web hook URL* to ```$config['slack']['incomingWebHookURL']``` to make this integration work.
 
 ### Add API token
 
-Last integration is web api. It is required for fetching user's name and avatar. You must copy web api token from here: [https://api.slack.com/web](https://api.slack.com/web) to  ```$config['slack']['webApiToken']```  in your ```config.php``` file.
+The last integration is [web API](https://api.slack.com/web). It is required for fetching user's name and avatar. You must copy web API token from here: [https://api.slack.com/web](https://api.slack.com/web) to  ```$config['slack']['webApiToken']```  in your ```config.php``` file.
 
 ### Configuration overview
 
-There are some useful configuration values declared in ```baseConfig.php```. You can override them by redeclaring same keys in ```config.php``` file.
+There are some useful configuration options declared in ```baseConfig.php```. You can override them in ```config.php``` file.
 
 #### Image processing settings
 

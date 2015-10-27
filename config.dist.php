@@ -9,8 +9,8 @@ return array_replace_recursive(
             'helpUrl' => '', // url to index.php file of this project
         ],
         'slack' => [
-            'token' => '', // slash command token
-            'endpoint' => '', // incoming hook endpoint, for example: https://hooks.slack.com/services/<something>
+            'slashCommandToken' => '', // slash command token
+            'incomingWebHookURL' => '', // incoming hook endpoint, for example: https://hooks.slack.com/services/<something>
             'webApiToken' => '', // slack web api token
         ],
         'image' => [

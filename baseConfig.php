@@ -6,8 +6,8 @@ return [
         'stickerCommand' => '/leo',
     ],
     'slack' => [
-        'token' => '', // slash command token, you should redefine it in config.php
-        'endpoint' => '', // incoming hook endpoint, you should redefine it in config.php
+        'slashCommandToken' => '', // slash command token, you should redefine it in config.php
+        'incomingWebHookURL' => '', // incoming hook endpoint, you should redefine it in config.php
         'webApiToken' => '', // slack web api token, you should redefine it in config.php
     ],
     'image' => [
