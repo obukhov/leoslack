@@ -3,7 +3,7 @@ Leo Slack
 
 Leo Slack is framework and solution for service of posting big smilies (also known as stickers) to channels, groups and private chats of your team's slack.
 
-You can read about this project in Russian at [dclg.net](http://dclg.net/2015/10/18/leo-slack/).
+You can read about this project in Russian at [dclg.net](http://dclg.net/2015/10/30/leo-slack/).
 
 How does it look like
 ---------------------------
